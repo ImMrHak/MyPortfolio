@@ -5,6 +5,7 @@ import { Card } from './ui/card'
 import { Badge } from './ui/badge'
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
+import { motion, AnimatePresence } from 'framer-motion'
 
 type CommandType = string | (() => Window | null)
 
@@ -37,8 +38,8 @@ const commands: Record<string, CommandType> = {
     "• GitHub: github.com/ImMrHak",
   passions: "Gaming & Other Interests:\n\n" +
     " Competitive Gaming:\n" +
-    "• VALORANT\n" + //  - Immortal Rank
-    "• CS:GO\n" + //  - Legendary Eagle Master
+    "• VALORANT\n" +
+    "• CS:GO\n" +
     " Tech Interests:\n" +
     "• PC Building\n" +
     "• Hardware Modding\n\n",
@@ -51,10 +52,13 @@ export function Terminal() {
   const [input, setInput] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalRef = useRef<HTMLDivElement>(null)
-  const { theme } = useTheme()
+  const { resolvedTheme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
   }, [])
 
   const handleCommand = (command: string) => {
@@ -76,10 +80,12 @@ export function Terminal() {
     setHistory(prev => [...prev, { command, output: output as string }])
     setInput('')
 
-    // Scroll to bottom
     setTimeout(() => {
       if (terminalRef.current) {
         terminalRef.current.scrollTop = terminalRef.current.scrollHeight
+      }
+      if (inputRef.current) {
+        inputRef.current.focus()
       }
     }, 0)
   }
@@ -91,92 +97,128 @@ export function Terminal() {
   }
 
   if (!mounted) {
-    return null
+    return (
+      <div className="w-full max-w-4xl mx-auto mt-8">
+        <Card className="w-full h-[500px] backdrop-blur-xl bg-background/20 border-none shadow-2xl" />
+      </div>
+    )
   }
 
+  const isDark = resolvedTheme === 'dark'
+
   return (
-    <Card className={cn(
-      "w-full max-w-4xl mx-auto font-mono rounded-xl overflow-hidden border-none shadow-2xl shadow-primary/10 backdrop-blur-xl",
-      theme === 'dark' 
-        ? "bg-[#1E1E1E] text-emerald-400" 
-        : "bg-white text-gray-800 border border-gray-200"
-    )}>
-      {/* Terminal Header */}
-      <div className={cn(
-        "flex items-center justify-between px-6 py-3 border-b",
-        theme === 'dark'
-          ? "bg-black/50 border-primary/10"
-          : "bg-gray-100 border-gray-200"
+    <div className="w-full max-w-4xl mx-auto mt-8">
+      <Card className={cn(
+        "w-full backdrop-blur-xl border-none shadow-2xl overflow-hidden",
+        isDark 
+          ? "bg-black/30 text-emerald-400 shadow-emerald-500/10" 
+          : "bg-white/30 text-gray-800 shadow-gray-500/10"
       )}>
-        <div className="flex gap-3">
-          <div className="w-3.5 h-3.5 rounded-full bg-red-500/90 shadow-lg shadow-red-500/20 hover:bg-red-600/90 transition-colors cursor-pointer" />
-          <div className="w-3.5 h-3.5 rounded-full bg-yellow-500/90 shadow-lg shadow-yellow-500/20 hover:bg-yellow-600/90 transition-colors cursor-pointer" />
-          <div className="w-3.5 h-3.5 rounded-full bg-emerald-500/90 shadow-lg shadow-emerald-500/20 hover:bg-emerald-600/90 transition-colors cursor-pointer" />
-        </div>
-        <Badge variant="outline" className={cn(
-          "text-xs font-medium",
-          theme === 'dark' ? "border-primary/20" : "border-gray-300"
-        )}>
-          guest@portfolio ~ %
-        </Badge>
-      </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className={cn(
+            "flex items-center justify-between px-6 py-3 border-b",
+            isDark
+              ? "bg-black/40 border-primary/10"
+              : "bg-white/40 border-gray-200/50"
+          )}>
+            <div className="flex gap-2">
+              <motion.div
+                whileHover={{ scale: 1.2 }}
+                className="w-3 h-3 rounded-full bg-red-500/90 shadow-lg shadow-red-500/20"
+              />
+              <motion.div
+                whileHover={{ scale: 1.2 }}
+                className="w-3 h-3 rounded-full bg-yellow-500/90 shadow-lg shadow-yellow-500/20"
+              />
+              <motion.div
+                whileHover={{ scale: 1.2 }}
+                className="w-3 h-3 rounded-full bg-emerald-500/90 shadow-lg shadow-emerald-500/20"
+              />
+            </div>
+            <Badge variant="outline" className={cn(
+              "text-xs font-medium backdrop-blur-sm",
+              isDark ? "border-primary/20 bg-primary/5" : "border-gray-300/50 bg-gray-50/50"
+            )}>
+              guest@portfolio ~ %
+            </Badge>
+          </div>
 
-      {/* Terminal Content */}
-      <div 
-        ref={terminalRef}
-        className={cn(
-          "h-[400px] overflow-auto p-6 space-y-4",
-          theme === 'dark' ? "bg-[#1E1E1E]" : "bg-white"
-        )}
-      >
-        {/* Welcome Message */}
-        <div className="space-y-1">
-          <p className="font-bold">Welcome to my portfolio terminal! 👋</p>
-          <p className={cn(
-            "text-sm",
-            theme === 'dark' ? "text-emerald-400/70" : "text-gray-600"
-          )}>Type 'help' to see available commands.</p>
-        </div>
+          <div 
+            ref={terminalRef}
+            className={cn(
+              "h-[500px] overflow-auto p-6 space-y-4",
+              isDark ? "bg-black/20" : "bg-white/20"
+            )}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="space-y-1"
+            >
+              <p className="font-bold">Welcome to my portfolio terminal! 👋</p>
+              <p className={cn(
+                "text-sm",
+                isDark ? "text-emerald-400/70" : "text-gray-600"
+              )}>Type 'help' to see available commands.</p>
+            </motion.div>
 
-        {/* Command History */}
-        {history.map(({ command, output }, i) => (
-          <div key={i} className="space-y-2">
+            <AnimatePresence mode="popLayout">
+              {history.map(({ command, output }, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.2 }}
+                  className="space-y-2"
+                >
+                  <div className={cn(
+                    "flex items-center gap-2",
+                    isDark ? "text-emerald-400" : "text-gray-800"
+                  )}>
+                    <span className="opacity-50">$</span>
+                    <span className="font-medium">{command}</span>
+                  </div>
+                  <div className={cn(
+                    "whitespace-pre-wrap pl-6",
+                    isDark ? "text-emerald-400/70" : "text-gray-600"
+                  )}>
+                    {output}
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+
             <div className={cn(
               "flex items-center gap-2",
-              theme === 'dark' ? "text-emerald-400" : "text-gray-800"
+              isDark ? "text-emerald-400" : "text-gray-800"
             )}>
               <span className="opacity-50">$</span>
-              <span className="font-bold">{command}</span>
-            </div>
-            <div className={cn(
-              "whitespace-pre-wrap pl-6",
-              theme === 'dark' ? "text-emerald-400/70" : "text-gray-600"
-            )}>
-              {output}
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className={cn(
+                  "flex-1 bg-transparent outline-none font-medium",
+                  isDark ? "text-emerald-400" : "text-gray-800",
+                  "placeholder-muted-foreground/50"
+                )}
+                placeholder="Type a command..."
+                spellCheck={false}
+                autoComplete="off"
+                autoCapitalize="off"
+              />
             </div>
           </div>
-        ))}
-
-        {/* Input Line */}
-        <div className={cn(
-          "flex items-center gap-2",
-          theme === 'dark' ? "text-emerald-400" : "text-gray-800"
-        )}>
-          <span className="opacity-50">$</span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className={cn(
-              "flex-1 bg-transparent outline-none",
-              theme === 'dark' ? "text-emerald-400" : "text-gray-800"
-            )}
-            autoFocus
-          />
-        </div>
-      </div>
-    </Card>
+        </motion.div>
+      </Card>
+    </div>
   )
 }

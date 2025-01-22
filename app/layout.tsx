@@ -1,18 +1,20 @@
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { ThemeWave } from "@/components/theme-wave"
-import { cn } from "@/lib/utils"
-import { Navigation } from "@/components/Navigation"
-import { metadata } from "./metadata"
-import { TooltipProvider } from "@/components/ui/tooltip"
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import { ThemeProvider } from '@/components/ThemeProvider'
+import { Navigation } from '@/components/Navigation'
+import { FloatingElements } from '@/components/3d/FloatingElements'
+import { ClientWrapper } from '@/components/ClientWrapper'
+import { TooltipProvider } from '@/components/ui/tooltip'
+import { cn } from '@/lib/utils'
+import { Toaster } from 'sonner'
 
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: '--font-inter',
-})
+const inter = Inter({ subsets: ['latin'] })
 
-export { metadata }
+export const metadata: Metadata = {
+  title: 'Mohamed Hakkou - Software Engineer',
+  description: 'Personal portfolio showcasing my projects and skills in software engineering.',
+}
 
 export default function RootLayout({
   children,
@@ -21,24 +23,29 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          inter.className
-        )}
-      >
+      <body className={cn(
+        inter.className,
+        "min-h-screen bg-background font-sans antialiased"
+      )}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
           <TooltipProvider>
-            <ThemeWave />
-            <div className="flex min-h-screen">
-              <Navigation />
-              {children}
+            <div className="relative min-h-screen overflow-hidden">
+              <FloatingElements />
+              <div className="relative z-10 flex">
+                <Navigation />
+                <main className="flex-1 min-h-screen">
+                  <ClientWrapper>
+                    {children}
+                  </ClientWrapper>
+                </main>
+              </div>
             </div>
+            <Toaster />
           </TooltipProvider>
         </ThemeProvider>
       </body>

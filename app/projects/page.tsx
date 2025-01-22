@@ -1,138 +1,145 @@
 'use client'
 
-import { Badge } from "@/components/ui/badge"
-import { Github, ExternalLink } from "lucide-react"
-import { motion } from "framer-motion"
-import { AnimatedCard } from "@/components/ui/animated-card"
-import { AnimatedGradient } from "@/components/ui/animated-gradient"
-import { useScrollNavigation } from "@/hooks/useScrollNavigation"
+import { motion } from 'framer-motion'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { useTheme } from 'next-themes'
+import { cn } from '@/lib/utils'
+import { Github, ExternalLink } from 'lucide-react'
+import { BackButton } from '@/components/BackButton'
 
 const projects = [
   {
-    title: "DevProGen",
-    description: "Development of an automated project generation tool with customizable templates, integrating OAuth2 authentication, user and project management. Built with Domain-Driven Design (DDD) architecture, featuring clear separation of layers: Domain, Application, Infrastructure, and Interface.",
-    image: "/projects/devprogen.png",
-    github: "https://github.com/ImMrHak/DevProGen-BE",
-    tags: ["Spring Boot", "MySQL", "OAuth2", "Lombok", "Angular", "DDD"]
+    title: 'Portfolio Website',
+    description: 'My personal portfolio website built with Next.js 13, Tailwind CSS, and Framer Motion.',
+    tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    github: 'https://github.com/ImMrHak/MyPortfolio',
+    demo: 'https://immrhak.github.io/MyPortfolio',
   },
   {
-    title: "LibraryHub",
-    description: "An enterprise-grade library management system built with modern cloud-native microservices architecture. Features include OAuth2/OpenID Connect authentication, event-driven architecture using Kafka, circuit breakers for resilience, and comprehensive microservices (Books, Users, Borrows, Reservations, Notifications).",
-    image: "/projects/libraryhub.png",
-    github: "https://github.com/ImMrHak/LibraryHub",
-    demo: "https://libraryhub.demo.com",
-    tags: ["Spring Boot 3.4", "Spring Cloud", "PostgreSQL", "MongoDB", "Kafka", "Docker", "Keycloak", "Microservices"]
+    title: 'ProfOnline',
+    description: 'A microservice-based online tutoring platform built with Spring Boot and React.',
+    tags: ['Spring Boot', 'React', 'PostgreSQL', 'Docker', 'Kubernetes'],
+    github: 'https://github.com/ImMrHak/ProfOnline',
+    demo: 'https://profonline.vercel.app',
   },
   {
-    title: "CarFleet",
-    description: "A complete solution for fleet management, enabling vehicle management, real-time location tracking, trip history, and user management. Features include interactive maps and comprehensive fleet analytics.",
-    image: "/projects/carfleet.png",
-    github: "https://github.com/ImMrHak/CarFleet-Management",
-    tags: ["Spring Boot", "React", "Android", "MySQL", "LeafletJS", "Node.js"]
+    title: 'LibraryHub',
+    description: 'Modern library management system with real-time updates and analytics.',
+    tags: ['Next.js', 'TypeScript', 'MongoDB', 'TailwindCSS'],
+    github: 'https://github.com/ImMrHak/LibraryHub',
+    demo: 'https://libraryhub.vercel.app',
   },
   {
-    title: "Mission Tracking",
-    description: "A digital solution for managing the missions of the General Inspectorate at the Ministry of Justice. Implements multi-layer architecture for efficient mission tracking and management.",
-    image: "/projects/missiontracking.png",
-    tags: [".NET", "Entity Framework", "LINQ to SQL", "SQL Server", "MVC"]
-  },
-  {
-    title: "ProfOnline",
-    description: "An innovative platform that enables students to book tutoring sessions with professors, offering multiple session formats including remote sessions with screen sharing and chat capabilities, home visits, or office appointments.",
-    image: "/projects/profonline.png",
-    github: "https://github.com/ImMrHak/ProfOnline",
-    demo: "https://profonline.demo.com",
-    tags: ["Spring Boot", "Angular", "WebRTC", "Real-time Communication", "OAuth2"]
-  },
-  {
-    title: "HakDuinoSerial",
-    description: "A cross-platform C# library enabling seamless communication with Arduino via serial connection. Features include mouse and keyboard control capabilities, making it versatile for hardware interaction projects.",
-    image: "/projects/hakduinoserial.png",
-    github: "https://github.com/ImMrHak/HakDuinoSerial",
-    tags: ["C#", "Arduino", "Serial Communication", "Cross-platform"]
-  },
-  {
-    title: "OPPPT Manager",
-    description: "A C# ASP.NET application facilitating student enrollment in OPPPT training programs. Features include application management, control addition, and student tracking for center directors.",
-    image: "/projects/oppptmanager.png",
-    tags: ["C#", "ASP.NET", "SQL Server", "MVC"]
+    title: 'HakDuinoSerial',
+    description: 'Arduino serial communication library for easy hardware interfacing.',
+    tags: ['C++', 'Arduino', 'Serial Communication'],
+    github: 'https://github.com/ImMrHak/HakDuinoSerial',
   }
 ]
 
 export default function ProjectsPage() {
-  useScrollNavigation({
-    prev: '/',
-    next: '/skills'
-  })
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
 
   return (
-    <main className="flex-1 min-h-screen bg-gradient-to-br from-background via-background/95 to-background/90 flex items-center justify-center">
-      <div className="w-full max-w-6xl px-4 sm:px-6 py-8 sm:py-16 mt-16 lg:mt-0">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <AnimatedGradient className="inline-block mb-8 sm:mb-12">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">
-              Featured Projects
-            </h1>
-          </AnimatedGradient>
-        </motion.div>
+    <div className="container mx-auto px-4 py-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="space-y-8"
+      >
+        <div className="relative pt-16">
+          <div className="relative space-y-2">
+            <BackButton />
+            <h1 className="text-3xl font-bold">Projects</h1>
+            <p className="text-muted-foreground">
+              Here are some of my featured projects. Each one represents a unique challenge and learning experience.
+            </p>
+          </div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projects.map((project, index) => (
-            <AnimatedCard key={project.title} index={index}>
-              <div className="p-4 sm:p-6">
-                {project.image && (
-                  <div className="relative h-40 sm:h-48 mb-4 overflow-hidden rounded-lg">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <AnimatedGradient className="absolute inset-0 opacity-20" />
+            <motion.div
+              key={project.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <Card className={cn(
+                "group p-6 h-full backdrop-blur-md border transition-all duration-300",
+                isDark 
+                  ? "bg-black/20 border-white/10 hover:border-primary/50" 
+                  : "bg-white/20 border-black/10 hover:border-primary/50"
+              )}>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <h2 className="text-xl font-semibold group-hover:text-primary transition-colors">
+                      {project.title}
+                    </h2>
+                    <p className="text-muted-foreground">
+                      {project.description}
+                    </p>
                   </div>
-                )}
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">{project.title}</h3>
-                <p className="text-sm sm:text-base text-muted-foreground mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs sm:text-sm">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-4">
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors"
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <Badge
+                        key={tag}
+                        variant="outline"
+                        className={cn(
+                          "transition-colors",
+                          isDark 
+                            ? "bg-primary/10 hover:bg-primary/20 border-primary/20" 
+                            : "bg-primary/5 hover:bg-primary/10 border-primary/10"
+                        )}
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-3 pt-4">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2"
+                      asChild
                     >
-                      <Github className="w-4 h-4" />
-                      <span>Source Code</span>
-                    </a>
-                  )}
-                  {project.demo && (
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      <span>Live Demo</span>
-                    </a>
-                  )}
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Github className="w-4 h-4" />
+                        GitHub
+                      </a>
+                    </Button>
+                    {project.demo && (
+                      <Button
+                        size="sm"
+                        className="gap-2"
+                        asChild
+                      >
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Live Demo
+                        </a>
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </AnimatedCard>
+              </Card>
+            </motion.div>
           ))}
         </div>
-      </div>
-    </main>
+      </motion.div>
+    </div>
   )
 }

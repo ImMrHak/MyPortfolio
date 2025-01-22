@@ -2,175 +2,126 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion } from 'framer-motion'
-import { Home, FolderGit, Code2, Mail, Github, Linkedin, Terminal, ScrollText, Sun, Moon, Menu, X, MousePointer2 } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { useTheme } from 'next-themes'
-import { Button } from './ui/button'
-import { useState } from 'react'
-import { useSettings } from '@/store/settings'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
+import { Home, FolderGit2, Mail, Code2, Sun, Moon } from 'lucide-react'
 
 const links = [
-  { name: 'Home', href: '/ImMrHak', icon: Terminal },
-  { name: 'Projects', href: '/ImMrHak/projects', icon: FolderGit },
-  { name: 'Skills', href: '/ImMrHak/skills', icon: Code2 },
-  { name: 'Contact', href: '/ImMrHak/contact', icon: Mail },
-]
-
-const socialLinks = [
-  { name: 'GitHub', href: 'https://github.com/ImMrHak', icon: Github },
-  { name: 'LinkedIn', href: 'https://linkedin.com/in/mohamed-hakkou', icon: Linkedin },
+  {
+    name: 'Home',
+    href: '/',
+    icon: Home
+  },
+  {
+    name: 'Projects',
+    href: '/projects',
+    icon: FolderGit2
+  },
+  {
+    name: 'Skills',
+    href: '/skills',
+    icon: Code2
+  },
+  {
+    name: 'Contact',
+    href: '/contact',
+    icon: Mail
+  }
 ]
 
 export function Navigation() {
   const pathname = usePathname()
-  const { theme, setTheme } = useTheme()
-  const [isOpen, setIsOpen] = useState(false)
-  const { autoScroll, toggleAutoScroll } = useSettings()
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
 
   return (
-    <>
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 right-4 z-50 p-2 rounded-md bg-background border"
-      >
-        {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-      </button>
-
-      {/* Navigation Sidebar */}
-      <nav className={cn(
-        "fixed top-0 left-0 h-screen bg-background border-r transition-transform duration-300 z-40",
-        "w-[250px] lg:translate-x-0",
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      )}>
-        <div className="flex flex-col h-full">
-          {/* Logo */}
-          <div className="p-6">
-            <div className="flex items-center gap-2 text-primary">
-              <Terminal className={cn(
-                "w-6 h-6",
-                theme === 'light' ? "text-primary" : "text-white"
-              )} />
-              <span className="font-bold text-lg">Mohamed Hakkou</span>
-            </div>
-          </div>
-
-          {/* Navigation Links */}
-          <ul className="flex-1 px-4">
-            {links.map((item) => {
-              const isActive = pathname === item.href
-              
-              return (
-                <li key={item.href} className="mb-2">
-                  <Link
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className={cn(
-                      "flex items-center px-3 py-2 rounded-md transition-colors relative",
-                      isActive ? "text-primary" : "text-muted-foreground hover:text-primary"
-                    )}
-                  >
-                    {isActive && (
-                      <motion.div
-                        layoutId="active-nav"
-                        className="absolute inset-0 bg-secondary rounded-md"
-                        initial={false}
-                        transition={{
-                          type: "spring",
-                          stiffness: 500,
-                          damping: 30
-                        }}
-                      />
-                    )}
-                    <item.icon className="w-5 h-5 mr-3" />
-                    <span className="relative z-10">{item.name}</span>
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-
-          {/* Bottom Section */}
-          <div className="p-6 border-t">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <Tooltip delayDuration={0}>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                      className="rounded-md"
-                    >
-                      {theme === 'dark' ? (
-                        <Sun className="h-5 w-5" />
-                      ) : (
-                        <Moon className="h-5 w-5" />
-                      )}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side="right" className="max-w-[200px] space-y-1">
-                    <p className="font-medium">Switch to {theme === 'dark' ? 'Light' : 'Dark'} Mode</p>
-                    <p className="text-xs text-muted-foreground">
-                      {theme === 'dark' 
-                        ? "Change to a brighter theme for better visibility in well-lit environments" 
-                        : "Change to a darker theme for better visibility in low-light environments"}
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-
-                <Tooltip delayDuration={0}>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={toggleAutoScroll}
-                      className={cn(
-                        "rounded-md",
-                        autoScroll ? "text-primary" : "text-muted-foreground"
-                      )}
-                    >
-                      <MousePointer2 className="h-5 w-5" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side="right" className="max-w-[200px] space-y-1">
-                    <p className="font-medium">{autoScroll ? 'Disable' : 'Enable'} Auto-Scroll Navigation</p>
-                    <p className="text-xs text-muted-foreground">
-                      {autoScroll 
-                        ? "Turn off automatic page navigation when scrolling to the top or bottom" 
-                        : "Turn on automatic page navigation when scrolling to the top or bottom"}
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </div>
-
-              <div className="flex gap-2">
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 rounded-md text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <link.icon className="w-5 h-5" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-30 lg:hidden"
-          onClick={() => setIsOpen(false)}
-        />
+    <motion.nav
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      className={cn(
+        "sticky top-0 h-screen w-16 sm:w-20 flex flex-col items-center justify-between py-8",
+        "border-r backdrop-blur-md",
+        isDark ? "border-white/10 bg-black/20" : "border-black/10 bg-white/20"
       )}
-    </>
+    >
+      <div className="flex flex-col items-center gap-4">
+        {links.map((link) => {
+          const isActive = pathname === link.href
+          const Icon = link.icon
+
+          return (
+            <Link
+              key={link.name}
+              href={link.href}
+              className={cn(
+                "relative p-3 rounded-xl transition-all duration-300",
+                "hover:bg-primary/10 group",
+                isActive && (isDark ? "bg-primary/20" : "bg-primary/10")
+              )}
+            >
+              <Icon className={cn(
+                "w-6 h-6 transition-colors duration-300",
+                isActive ? "text-primary" : "text-muted-foreground",
+                "group-hover:text-primary"
+              )} />
+              
+              {/* Tooltip */}
+              <span className={cn(
+                "absolute left-full ml-2 px-2 py-1 rounded-md text-sm whitespace-nowrap",
+                "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+                "pointer-events-none",
+                isDark ? "bg-black/50 text-white" : "bg-white/50 text-black"
+              )}>
+                {link.name}
+              </span>
+            </Link>
+          )
+        })}
+      </div>
+
+      {/* Theme Toggle */}
+      <button
+        onClick={() => setTheme(isDark ? 'light' : 'dark')}
+        className={cn(
+          "relative p-3 rounded-xl transition-all duration-300",
+          "hover:bg-primary/10 group"
+        )}
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          {isDark ? (
+            <motion.div
+              key="sun"
+              initial={{ scale: 0, rotate: 90 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0, rotate: 90 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Sun className="w-6 h-6 text-muted-foreground group-hover:text-primary" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="moon"
+              initial={{ scale: 0, rotate: 90 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0, rotate: 90 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Moon className="w-6 h-6 text-muted-foreground group-hover:text-primary" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Tooltip */}
+        <span className={cn(
+          "absolute left-full ml-2 px-2 py-1 rounded-md text-sm whitespace-nowrap",
+          "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+          "pointer-events-none",
+          isDark ? "bg-black/50 text-white" : "bg-white/50 text-black"
+        )}>
+          Switch to {isDark ? 'light' : 'dark'} mode
+        </span>
+      </button>
+    </motion.nav>
   )
 }
