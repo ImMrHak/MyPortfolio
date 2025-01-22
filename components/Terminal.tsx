@@ -3,6 +3,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Card } from './ui/card'
 import { Badge } from './ui/badge'
+import { useTheme } from 'next-themes'
+import { cn } from '@/lib/utils'
 
 type CommandType = string | (() => Window | null)
 
@@ -49,6 +51,7 @@ export function Terminal() {
   const [input, setInput] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalRef = useRef<HTMLDivElement>(null)
+  const { theme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
@@ -88,67 +91,89 @@ export function Terminal() {
   }
 
   if (!mounted) {
-    return null // Return null on server-side and initial client-side render
+    return null
   }
 
   return (
-    <Card className="w-full max-w-4xl mx-auto bg-[#1E1E1E] text-emerald-400 font-mono rounded-xl overflow-hidden border-none shadow-2xl shadow-primary/10 backdrop-blur-xl">
+    <Card className={cn(
+      "w-full max-w-4xl mx-auto font-mono rounded-xl overflow-hidden border-none shadow-2xl shadow-primary/10 backdrop-blur-xl",
+      theme === 'dark' 
+        ? "bg-[#1E1E1E] text-emerald-400" 
+        : "bg-white text-gray-800 border border-gray-200"
+    )}>
       {/* Terminal Header */}
-      <div className="flex items-center justify-between px-6 py-3 bg-black/50 border-b border-primary/10">
+      <div className={cn(
+        "flex items-center justify-between px-6 py-3 border-b",
+        theme === 'dark'
+          ? "bg-black/50 border-primary/10"
+          : "bg-gray-100 border-gray-200"
+      )}>
         <div className="flex gap-3">
           <div className="w-3.5 h-3.5 rounded-full bg-red-500/90 shadow-lg shadow-red-500/20 hover:bg-red-600/90 transition-colors cursor-pointer" />
           <div className="w-3.5 h-3.5 rounded-full bg-yellow-500/90 shadow-lg shadow-yellow-500/20 hover:bg-yellow-600/90 transition-colors cursor-pointer" />
           <div className="w-3.5 h-3.5 rounded-full bg-emerald-500/90 shadow-lg shadow-emerald-500/20 hover:bg-emerald-600/90 transition-colors cursor-pointer" />
         </div>
-        <Badge variant="outline" className="text-sm bg-black/30 text-emerald-400 border-emerald-900/50 px-4 py-1">
-          guest@immrhak — Terminal
+        <Badge variant="outline" className={cn(
+          "text-xs font-medium",
+          theme === 'dark' ? "border-primary/20" : "border-gray-300"
+        )}>
+          guest@portfolio ~ %
         </Badge>
-        <div className="w-[88px]" /> {/* Spacer to center the badge */}
       </div>
 
       {/* Terminal Content */}
       <div 
-        ref={terminalRef} 
-        className="h-[400px] overflow-y-auto p-6 space-y-3 bg-gradient-to-b from-[#1E1E1E] to-black/95 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-900/50 hover:scrollbar-thumb-emerald-800/50"
+        ref={terminalRef}
+        className={cn(
+          "h-[400px] overflow-auto p-6 space-y-4",
+          theme === 'dark' ? "bg-[#1E1E1E]" : "bg-white"
+        )}
       >
         {/* Welcome Message */}
-        {history.length === 0 && (
-          <div className="space-y-2 animate-fade-in">
-            <div className="text-emerald-400/90 font-medium text-lg">
-              Welcome to my interactive portfolio!
-            </div>
-            <div className="text-emerald-400/70 font-light">
-              Type <span className="text-emerald-300 font-medium">'help'</span> to see available commands.
-            </div>
-          </div>
-        )}
+        <div className="space-y-1">
+          <p className="font-bold">Welcome to my portfolio terminal! 👋</p>
+          <p className={cn(
+            "text-sm",
+            theme === 'dark' ? "text-emerald-400/70" : "text-gray-600"
+          )}>Type 'help' to see available commands.</p>
+        </div>
 
         {/* Command History */}
-        {history.map(({ command, output }, index) => (
-          <div key={index} className="space-y-2 animate-fade-in">
-            <div className="flex items-center gap-2 group">
-              <span className="text-emerald-300 group-hover:text-emerald-200 transition-colors">guest@immrhak</span>
-              <span className="text-emerald-400 group-hover:text-emerald-300 transition-colors">$</span>
-              <span className="text-emerald-400 group-hover:text-emerald-300 transition-colors">{command}</span>
+        {history.map(({ command, output }, i) => (
+          <div key={i} className="space-y-2">
+            <div className={cn(
+              "flex items-center gap-2",
+              theme === 'dark' ? "text-emerald-400" : "text-gray-800"
+            )}>
+              <span className="opacity-50">$</span>
+              <span className="font-bold">{command}</span>
             </div>
-            <div className="text-emerald-400/70 ml-6 whitespace-pre-line font-light leading-relaxed">
+            <div className={cn(
+              "whitespace-pre-wrap pl-6",
+              theme === 'dark' ? "text-emerald-400/70" : "text-gray-600"
+            )}>
               {output}
             </div>
           </div>
         ))}
 
         {/* Input Line */}
-        <div className="flex items-center gap-2 group animate-fade-in">
-          <span className="text-emerald-300 group-hover:text-emerald-200 transition-colors">guest@immrhak</span>
-          <span className="text-emerald-400 group-hover:text-emerald-300 transition-colors">$</span>
+        <div className={cn(
+          "flex items-center gap-2",
+          theme === 'dark' ? "text-emerald-400" : "text-gray-800"
+        )}>
+          <span className="opacity-50">$</span>
           <input
             ref={inputRef}
+            type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent border-none outline-none text-emerald-400 focus:ring-0 focus-visible:ring-0 px-0 placeholder-emerald-700 text-base"
+            className={cn(
+              "flex-1 bg-transparent outline-none",
+              theme === 'dark' ? "text-emerald-400" : "text-gray-800"
+            )}
             autoFocus
-            placeholder="Type a command..."
           />
         </div>
       </div>

@@ -5,6 +5,7 @@ import { ThemeWave } from "@/components/theme-wave"
 import { cn } from "@/lib/utils"
 import { Navigation } from "@/components/Navigation"
 import { metadata } from "./metadata"
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -32,11 +33,13 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <ThemeWave />
-          <div className="flex min-h-screen">
-            <Navigation />
-            {children}
-          </div>
+          <TooltipProvider>
+            <ThemeWave />
+            <div className="flex min-h-screen">
+              <Navigation />
+              {children}
+            </div>
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
