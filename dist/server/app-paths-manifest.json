@@ -1,1 +1,9 @@
-{}
+{
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/ImMrHak/skills/page": "app/ImMrHak/skills/page.js",
+  "/ImMrHak/contact/page": "app/ImMrHak/contact/page.js",
+  "/ImMrHak/page": "app/ImMrHak/page.js",
+  "/ImMrHak/projects/page": "app/ImMrHak/projects/page.js"
+}
