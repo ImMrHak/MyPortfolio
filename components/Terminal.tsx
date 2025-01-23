@@ -30,7 +30,8 @@ const commands: Record<string, CommandType> = {
     "• Cloud: AWS, Azure",
   projects: "Featured Projects:\n" +
     "• ProfOnline - A microservice-based online tutoring platform\n" +
-    "• LibraryHub - Modern library management system\n" +
+    "• LibraryHub - A microservice-based Modern library management system\n" +
+    "• DevProGen - A powerful and flexible project generation tool designed for developers\n" +
     "• HakDuinoSerial - Arduino serial communication library",
   contact: "Get in touch:\n" +
     "• Email: hakkoumohamed23@gmail.com\n" +

@@ -22,14 +22,18 @@ const projects = [
     description: 'A microservice-based online tutoring platform built with Spring Boot and React.',
     tags: ['Spring Boot', 'React', 'PostgreSQL', 'Docker', 'Kubernetes'],
     github: 'https://github.com/ImMrHak/ProfOnline',
-    demo: 'https://profonline.vercel.app',
   },
   {
     title: 'LibraryHub',
     description: 'Modern library management system with real-time updates and analytics.',
     tags: ['Next.js', 'TypeScript', 'MongoDB', 'TailwindCSS'],
     github: 'https://github.com/ImMrHak/LibraryHub',
-    demo: 'https://libraryhub.vercel.app',
+  },
+  {
+    title: 'DevProGen',
+    description: 'A powerful and flexible project generation tool designed for developers.',
+    tags: ['Angular', 'Spring Boot RestAPI', 'MySQL', 'Material UI'],
+    github: 'https://github.com/ImMrHak/DevProGen-BE',
   },
   {
     title: 'HakDuinoSerial',

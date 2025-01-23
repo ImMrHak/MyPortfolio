@@ -11,10 +11,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/projects/page": [
+    "/certificates/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/projects/page.js"
+      "static/chunks/app/certificates/page.js"
     ],
     "/skills/page": [
       "static/chunks/webpack.js",
@@ -26,10 +26,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/contact/page.js"
     ],
-    "/certificates/page": [
+    "/projects/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/certificates/page.js"
+      "static/chunks/app/projects/page.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

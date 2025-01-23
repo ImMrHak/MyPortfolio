@@ -38,7 +38,7 @@ export default function RootLayout({
               <FloatingElements />
               <div className="relative z-10 flex">
                 <Navigation />
-                <main className="flex-1 min-h-screen">
+                <main className="flex-1 min-h-screen pl-0 md:pl-[5rem]">
                   <ClientWrapper>
                     {children}
                   </ClientWrapper>
