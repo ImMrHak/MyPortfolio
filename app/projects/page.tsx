@@ -20,25 +20,25 @@ const projects = [
   {
     title: 'ProfOnline',
     description: 'A microservice-based online tutoring platform built with Spring Boot and React.',
-    tags: ['Spring Boot', 'React', 'PostgreSQL', 'Docker', 'Kubernetes'],
+    tags: ['.NET', 'Angular', 'SqlServer', 'Docker', 'Kubernetes'],
     github: 'https://github.com/ImMrHak/ProfOnline',
   },
   {
     title: 'LibraryHub',
     description: 'Modern library management system with real-time updates and analytics.',
-    tags: ['Next.js', 'TypeScript', 'MongoDB', 'TailwindCSS'],
+    tags: ['Spring Boot', 'Angular', 'MongoDB', 'MySQL', 'PostgreSQL', 'Kafka', 'KeyCloak'],
     github: 'https://github.com/ImMrHak/LibraryHub',
   },
   {
     title: 'DevProGen',
     description: 'A powerful and flexible project generation tool designed for developers.',
-    tags: ['Angular', 'Spring Boot RestAPI', 'MySQL', 'Material UI'],
+    tags: ['Angular', 'Spring Boot', 'MySQL', 'Material UI'],
     github: 'https://github.com/ImMrHak/DevProGen-BE',
   },
   {
     title: 'HakDuinoSerial',
     description: 'Arduino serial communication library for easy hardware interfacing.',
-    tags: ['C++', 'Arduino', 'Serial Communication'],
+    tags: ['C#', 'Arduino', 'Serial Communication'],
     github: 'https://github.com/ImMrHak/HakDuinoSerial',
   }
 ]
