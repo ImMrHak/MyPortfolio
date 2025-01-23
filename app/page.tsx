@@ -1,12 +1,22 @@
 'use client'
 
-import { Terminal } from '@/components/Terminal'
+import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
+
+// Dynamically import Terminal with no SSR
+const Terminal = dynamic(() => import('@/components/Terminal').then(mod => mod.Terminal), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full max-w-4xl mx-auto mt-8">
+      <div className="w-full h-[500px] backdrop-blur-xl bg-background/20 border-none shadow-2xl rounded-2xl" />
+    </div>
+  )
+})
 
 const socialLinks = [
   {
@@ -29,6 +39,21 @@ const socialLinks = [
   },
 ]
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+}
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+}
+
 export default function Home() {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark'
@@ -43,17 +68,15 @@ export default function Home() {
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-4rem)]">
           {/* Introduction Section */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            variants={container}
+            initial="hidden"
+            animate="show"
             className="space-y-8"
           >
             {/* Header */}
             <div className="space-y-4">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
+                variants={item}
                 className={cn(
                   "inline-block px-4 py-2 rounded-full text-sm font-medium",
                   isDark 
@@ -65,9 +88,7 @@ export default function Home() {
               </motion.div>
 
               <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                variants={item}
                 className="text-4xl sm:text-5xl lg:text-6xl font-bold"
               >
                 Hi, I'm{' '}
@@ -82,9 +103,7 @@ export default function Home() {
               </motion.h1>
 
               <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+                variants={item}
                 className="text-xl sm:text-2xl text-muted-foreground font-medium"
               >
                 Software & Network Engineer
@@ -93,9 +112,7 @@ export default function Home() {
 
             {/* Description */}
             <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
+              variants={item}
               className="text-lg text-muted-foreground max-w-lg leading-relaxed"
             >
               I specialize in building modern, scalable web applications with cutting-edge technologies.
@@ -104,9 +121,7 @@ export default function Home() {
 
             {/* Action Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
+              variants={item}
               className="flex flex-wrap gap-4"
             >
               <Button asChild size="lg" className="gap-2 shadow-lg shadow-primary/20">
@@ -132,9 +147,7 @@ export default function Home() {
 
             {/* Social Links */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
+              variants={item}
               className="flex items-center gap-4"
             >
               {socialLinks.map((link) => (
