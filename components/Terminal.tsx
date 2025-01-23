@@ -22,10 +22,10 @@ const commands: Record<string, CommandType> = {
   about: "Hi! I'm Mohamed Hakkou, a Software & Network Engineer passionate about building scalable applications.\n" +
     "Currently pursuing engineering studies at EMSI, focusing on modern technologies and best practices.",
   skills: "Technical Skills:\n" +
-    "• Languages: Java, TypeScript, Python, C#, C++\n" +
-    "• Frontend: React, Next.js, TailwindCSS\n" +
-    "• Backend: Spring Boot, Node.js, .NET\n" +
-    "• Database: PostgreSQL, MongoDB, Redis\n" +
+    "• Languages: Java, C#, C/C++, TypeScript, Python\n" +
+    "• Frontend: Angular, React, Next.js\n" +
+    "• Backend: Spring Boot, .NET, Node.js\n" +
+    "• Database: Oracle, SqlServer, PostgreSQL, MongoDB, Redis\n" +
     "• DevOps: Docker, Kubernetes, CI/CD\n" +
     "• Cloud: AWS, Azure",
   projects: "Featured Projects:\n" +
