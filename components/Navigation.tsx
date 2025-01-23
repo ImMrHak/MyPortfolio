@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { useTheme } from 'next-themes'
-import { Home, FolderGit2, Mail, Code2, Sun, Moon } from 'lucide-react'
+import { Home, FolderGit2, Mail, Code2, Sun, Moon, Award } from 'lucide-react'
 
 const links = [
   {
@@ -24,6 +24,11 @@ const links = [
     icon: Code2
   },
   {
+    name: 'Certificates',
+    href: '/certificates',
+    icon: Award
+  },
+  {
     name: 'Contact',
     href: '/contact',
     icon: Mail
@@ -40,7 +45,7 @@ export function Navigation() {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       className={cn(
-        "sticky top-0 h-screen w-16 sm:w-20 flex flex-col items-center justify-between py-8",
+        "fixed left-0 h-full w-16 sm:w-20 flex flex-col items-center justify-between py-8 z-50",
         "border-r backdrop-blur-md",
         isDark ? "border-white/10 bg-black/20" : "border-black/10 bg-white/20"
       )}
