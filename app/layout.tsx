@@ -8,6 +8,7 @@ import { ClientWrapper } from '@/components/ClientWrapper'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 import { Toaster } from 'sonner'
+import { CustomCursor } from '@/components/CustomCursor'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +34,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <CustomCursor />
           <TooltipProvider>
             <div className="relative min-h-screen overflow-hidden">
               <FloatingElements />

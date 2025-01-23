@@ -2,11 +2,13 @@
 const nextConfig = {
     output: "export",
     distDir: "dist",
+    basePath: '/MyPortfolio',
+    assetPrefix: '/MyPortfolio/',
     images: {
       unoptimized: true,
     },
     eslint: {
-      ignoreDuringBuilds: true, // Disable ESLint during build
+      ignoreDuringBuilds: true,
     },
   };
   

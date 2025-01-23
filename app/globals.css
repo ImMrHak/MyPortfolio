@@ -258,3 +258,33 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom cursor styles */
+* {
+  cursor: none !important;
+}
+
+.custom-cursor {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+:root .custom-cursor {
+  background-color: #000000;
+}
+
+.dark .custom-cursor {
+  background-color: #ffffff;
+}
+
+a:hover ~ .custom-cursor,
+button:hover ~ .custom-cursor {
+  transform: translate(-50%, -50%) scale(1.5);
+}

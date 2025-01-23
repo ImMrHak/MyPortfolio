@@ -7,6 +7,7 @@ import { AnimatedCard } from '@/components/ui/animated-card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { getImagePath } from '@/lib/image-path'
 
 interface Certificate {
   title: string
@@ -205,13 +206,13 @@ export default function CertificatesPage() {
                           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 group-hover:from-yellow-400/10 group-hover:to-orange-400/5 transition-all duration-500" />
                           <div className="absolute inset-0 backdrop-blur-[2px]" />
                           <img
-                            src={cert.logo}
+                            src={getImagePath(cert.logo)}
                             alt={`${cert.organization} logo`}
                             className="h-full w-full object-contain p-2.5 relative z-10 dark:brightness-200 dark:contrast-125 transition-all duration-500"
                             onError={(e) => {
                               const target = e.target as HTMLImageElement;
                               target.onerror = null;
-                              target.src = '/logos/default.svg';
+                              target.src = getImagePath('/logos/default.svg');
                             }}
                           />
                         </div>
@@ -296,13 +297,13 @@ export default function CertificatesPage() {
                           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-500" />
                           <div className="absolute inset-0 backdrop-blur-[2px]" />
                           <img
-                            src={cert.logo}
+                            src={getImagePath(cert.logo)}
                             alt={`${cert.organization} logo`}
                             className="h-full w-full object-contain p-2.5 relative z-10 dark:brightness-200 dark:contrast-125 transition-all duration-500"
                             onError={(e) => {
                               const target = e.target as HTMLImageElement;
                               target.onerror = null;
-                              target.src = '/logos/default.svg';
+                              target.src = getImagePath('/logos/default.svg');
                             }}
                           />
                         </div>
